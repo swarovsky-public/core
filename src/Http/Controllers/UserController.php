@@ -1,15 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Swarovsky\Core\Http\Controllers;
 
-use App\Helpers\Cache\CacheHelper;
-use App\Helpers\ErrorHelper;
-use App\Models\Permission;
-use App\Models\Role;
-use App\Models\User;
+
+use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Request;
+use Swarovsky\Core\Helpers\CacheHelper;
+use Swarovsky\Core\Helpers\SessionHelper;
+use Swarovsky\Core\Models\Permission;
+use Swarovsky\Core\Models\Role;
+use Swarovsky\Core\Models\User;
 
 
 class UserController extends Controller
@@ -25,12 +27,12 @@ class UserController extends Controller
     {
         //$users = CacheHelper::get(User::class, ['with' => ['roles']]);
         $users = User::with(['roles', 'passwordSecurity'])->get();
-        return view('user.index', ['users' => $users]);
+        return view('swarovsky-core::user.index', ['users' => $users]);
     }
 
     public function profile()
     {
-        return view('user.profile', ['user' => Auth()->user()]);
+        return view('swarovsky-core::user.profile', ['user' => Auth()->user()]);
     }
 
     public function update_profile(\Illuminate\Http\Request $request)
@@ -50,7 +52,7 @@ class UserController extends Controller
             Storage::disk('s3')->put('users/' . $user->id . '.jpg', $finalImg->__toString());
         }
         */
-        ErrorHelper::add_error('User successfully updated!', 'success');
+        SessionHelper::add_message('User successfully updated!', 'success');
         return redirect()->back();
     }
 
@@ -66,16 +68,16 @@ class UserController extends Controller
     {
         if($request::has('roles')){
             if($user->syncRoles($request::input('roles'))){
-                ErrorHelper::add_error('User roles have been updated', 'success');
+                SessionHelper::add_message('User roles have been updated', 'success');
             } else {
-                ErrorHelper::add_error('Error saving user roles', 'danger');
+                SessionHelper::add_message('Error saving user roles', 'danger');
             }
         }
         if($request::has('permissions')){
             if($user->syncPermissions($request::input('permissions'))){
-                ErrorHelper::add_error('User permissions have been updated', 'success');
+                SessionHelper::add_message('User permissions have been updated', 'success');
             } else {
-                ErrorHelper::add_error('Error saving user permissions', 'danger');
+                SessionHelper::add_message('Error saving user permissions', 'danger');
             }
         }
 

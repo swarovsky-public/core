@@ -18,7 +18,7 @@
                 <option>Select a permission</option>
                 @foreach($permissions as $permission)
                     <option
-                        value="{{$permission->id}}" {{\App\Helpers\SelectHelper::selectedUserPermission($user, $permission)}}>
+                        value="{{$permission->id}}" {{\Swarovsky\Core\Helpers\SelectHelper::selectedUserPermission($user, $permission)}}>
                         {{$permission->name}}
                     </option>
                 @endforeach
@@ -33,7 +33,7 @@
                 <option>Select a role</option>
                 @foreach($roles as $role)
                     <option
-                        value="{{$role->id}}" {{\App\Helpers\SelectHelper::selectedRole($user, $role)}}>
+                        value="{{$role->id}}" {{\Swarovsky\Core\Helpers\SelectHelper::selectedRole($user, $role)}}>
                         {{$role->name}}
                     </option>
                 @endforeach

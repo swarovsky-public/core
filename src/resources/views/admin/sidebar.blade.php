@@ -10,16 +10,8 @@
     </center>
 
     <ul uk-accordion>
-        <li class="uk-open">
-            <a class="uk-accordion-title uk-text-small uk-text-bold" href="#">OnBoarding</a>
-            <div class="uk-accordion-content uk-margin-remove-top">
-                <ul class="uk-nav uk-nav-default">
-                    <li><a href="{{route('step.index')}}">Steps</a></li>
-                    <li><a href="{{route('goal.index')}}">Goals</a></li>
-                    <li><a href="{{route('onboarding.index')}}">Onboardings</a></li>
-                </ul>
-            </div>
-        </li>
+        @yield('admin-sidebar')
+
         <li>
             <a class="uk-accordion-title uk-text-small uk-text-bold" href="#">Security</a>
             <div class="uk-accordion-content uk-margin-remove-top">

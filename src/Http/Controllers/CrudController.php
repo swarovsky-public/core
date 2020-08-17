@@ -33,7 +33,7 @@ class CrudController extends Controller
     {
         $model = $this->getModel('.index');
         $class = $this->getClass($model);
-        return view('crud.index', [
+        return view('swarovsky-core::crud.index', [
             'route' => str_replace('.index', '', Route::currentRouteName()),
             'model' => $model,
             'items' => $class::paginate(15),
@@ -45,7 +45,7 @@ class CrudController extends Controller
     {
         $model = $this->getModel('.create');
         $class = $this->getClass($model);
-        return view('crud.create', [
+        return view('swarovsky-core::crud.create', [
             'model' => $model,
             'item' => new $class,
             'schema' => $class::getSchema('.create')
@@ -66,7 +66,7 @@ class CrudController extends Controller
     {
         $model = $this->getModel('.show');
         $class = $this->getClass($model);
-        return view('crud.show', [
+        return view('swarovsky-core::crud.show', [
             'model' => $model,
             'item' => $class::find($id),
             'schema' => $class::getSchema('.show')
@@ -77,7 +77,7 @@ class CrudController extends Controller
     {
         $model = $this->getModel('.edit');
         $class = $this->getClass($model);
-        return view('crud.edit', [
+        return view('swarovsky-core::crud.edit', [
             'route' => str_replace('.edit', '', Route::currentRouteName()),
             'model' => $model,
             'item' => $class::find($id),

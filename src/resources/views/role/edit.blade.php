@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('swarovsky-core::layouts.admin')
 
 @section('content')
 <div class="uk-section-small">
@@ -16,7 +16,7 @@
         </div>
         <hr>
 
-        @component('role._form', [
+        @component('swarovsky-core::role._form', [
             'role' => $role,
             'permissions' => $permissions,
             'action' => route("roles.update", ['role' => $role]),

@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('swarovsky-core::layouts.admin')
 
 @section('content')
 
@@ -17,7 +17,7 @@
         </div>
         <hr>
 
-        @component('crud._form', [
+        @component('swarovsky-core::crud._form', [
                 'item' => $item,
                 'schema' => $schema,
                 'action' => "{$model}.store",

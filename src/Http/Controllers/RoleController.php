@@ -3,14 +3,14 @@
 namespace Swarovsky\Core\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Permission;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Models\Role;
 use Swarovsky\Core\Helpers\CacheHelper;
 use Swarovsky\Core\Helpers\SessionHelper;
+use Swarovsky\Core\Models\Permission;
+use Swarovsky\Core\Models\Role;
 
 class RoleController extends Controller
 {
@@ -23,14 +23,14 @@ class RoleController extends Controller
     public function index(): Renderable
     {
         $roles = CacheHelper::get(Role::class, ['order' => 'name', 'with' => ['permissions']]);
-        return view('role.index', ['roles' => $roles]);
+        return view('swarovsky-core::role.index', ['roles' => $roles]);
     }
 
     public function create(): Renderable
     {
         $role = new Role();
         $permissions = CacheHelper::get(Permission::class, ['order' => 'name']);
-        return view('role.create', ['role' => $role,  'permissions' => $permissions]);
+        return view('swarovsky-core::role.create', ['role' => $role,  'permissions' => $permissions]);
     }
 
     protected function validator(array $data): \Illuminate\Contracts\Validation\Validator
@@ -64,7 +64,7 @@ class RoleController extends Controller
     public function edit(Role $role): Renderable
     {
         $permissions = CacheHelper::get(Permission::class, ['order' => 'name']);
-        return view('role.edit', ['role' => $role, 'permissions' => $permissions]);
+        return view('swarovsky-core::role.edit', ['role' => $role, 'permissions' => $permissions]);
     }
 
     public function update(Request $request, Role $role): RedirectResponse

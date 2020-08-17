@@ -3,12 +3,12 @@
 namespace Swarovsky\Core\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\PasswordSecurity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use PragmaRX\Google2FAQRCode\Google2FA;
 use Swarovsky\Core\Helpers\SessionHelper;
+use Swarovsky\Core\Models\PasswordSecurity;
 
 class PasswordSecurityController extends Controller
 {
@@ -28,7 +28,7 @@ class PasswordSecurityController extends Controller
             'user' => $user,
             'google2fa_url' => $google2fa_url
         );
-        return view('auth.2fa')->with('data', $data);
+        return view('swarovsky-core::auth.2fa')->with('data', $data);
     }
 
     public function generate2faSecret(Request $request){
@@ -66,7 +66,7 @@ class PasswordSecurityController extends Controller
     public function disable2fa(Request $request){
 
         if (!(Hash::check($request->get('current-password'), Auth::user()->password))) {
-            ErrorHelper::add_error('Your password does not matches with your account password. Please try again.', 'danger');
+            SessionHelper::add_message('Your password does not matches with your account password. Please try again.', 'danger');
             return redirect()->back();
         }
 

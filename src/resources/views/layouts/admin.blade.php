@@ -17,8 +17,8 @@
 
 <body>
 
-@component('core::admin.navbar')@endcomponent
-@component('core::admin.sidebar')@endcomponent
+@component('swarovsky-core::admin.navbar')@endcomponent
+@component('swarovsky-core::admin.sidebar')@endcomponent
 
 <div class="content-padder content-background">
     @yield('content')
@@ -30,7 +30,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.transit/0.9.12/jquery.transit.min.js" integrity="sha256-rqEXy4JTnKZom8mLVQpvni3QHbynfjPmPxQVsPZgmJY=" crossorigin="anonymous"></script>
 <script src="{{ asset('js/admin-script.js') }}"></script>
-@include('core::components.session_messages')
+@include('swarovsky-core::components.session_messages')
 @stack('scripts')
 </body>
 

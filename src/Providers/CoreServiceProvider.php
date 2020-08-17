@@ -28,10 +28,10 @@ class CoreServiceProvider extends ServiceProvider
     public function boot()
     {
         // use this if your package has views
-        $this->loadViewsFrom(realpath(dirname(__DIR__, 1) . '/resources/views'), 'core');
+        $this->loadViewsFrom(realpath(dirname(__DIR__, 1) . '/resources/views'), 'swarovsky-core');
 
         // use this if your package has lang files
-        $this->loadTranslationsFrom(dirname(__DIR__, 1) . '/resources/lang', 'core');
+        $this->loadTranslationsFrom(dirname(__DIR__, 1) . '/resources/lang', 'swarovsky-core');
 
         // use this if your package has routes
         $this->setupRoutes($this->app->router);
@@ -45,13 +45,13 @@ class CoreServiceProvider extends ServiceProvider
 
         // use the vendor configuration file as fallback
         $this->mergeConfigFrom(
-            dirname(__DIR__, 1).'/config/crud.php', 'core'
+            dirname(__DIR__, 1).'/config/crud.php', 'core-crud'
         );
         $this->mergeConfigFrom(
-            dirname(__DIR__, 1).'/config/google2fa.php', 'core'
+            dirname(__DIR__, 1).'/config/google2fa.php', 'core-google2fa'
         );
         $this->mergeConfigFrom(
-            dirname(__DIR__, 1).'/config/permission.php', 'core'
+            dirname(__DIR__, 1).'/config/permission.php', 'core-permission'
         );
     }
 
@@ -105,7 +105,7 @@ class CoreServiceProvider extends ServiceProvider
 
     private function registerSkeleton(): void
     {
-        $this->app->bind('core', static function ($app) {
+        $this->app->bind('swarovsky-core', static function ($app) {
             return new CoreServiceProvider($app);
         });
     }

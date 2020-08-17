@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('swarovsky-core::layouts.admin')
 
 @section('content')
 <div class="uk-flex uk-flex-center uk-flex-middle uk-height-1-1">

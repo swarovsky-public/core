@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('swarovsky-core::layouts.admin')
 
 @section('content')
 
@@ -30,7 +30,7 @@
             </tr>
             </thead>
             <tbody>
-            @each('role.row', $roles, 'role')
+            @each('swarovsky-core::role.row', $roles, 'role')
             </tbody>
         </table>
 
