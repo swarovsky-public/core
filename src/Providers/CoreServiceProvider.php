@@ -65,7 +65,7 @@ class CoreServiceProvider extends ServiceProvider
     {
         $router->group([
             'namespace' => 'Swarovsky\Core\Http\Controllers',
-            'middleware' => ['web', 'auth', 'password.confirm', 'verified', '2fa']
+            'middleware' => ['web', 'auth', 'verified']
         ], static function ($router) {
             require dirname(__DIR__, 1) . '/routes/web.php';
         });

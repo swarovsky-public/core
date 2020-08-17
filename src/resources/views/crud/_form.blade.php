@@ -1,5 +1,5 @@
 @php
-    $form = new \App\Helpers\FormHelper($action, $method, $model, $item);
+    $form = new \Swarovsky\Core\Helpers\FormHelper($action, $method, $model, $item);
 
     $form->open();
 
