@@ -14,7 +14,7 @@
                     Back to Index
                 </a>
                 <a class="uk-button uk-button-secondary uk-button-small" href="{{route($model.'.edit', [$model => $item])}}">
-                    Show
+                    Edit
                 </a>
             </div>
         </div>

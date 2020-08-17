@@ -1,11 +1,11 @@
 <?php
 #Route::resource('damageType', 'DamageTypeController');
 
-Route::get('user/2fa', 'Auth\PasswordSecurityController@show2faForm')->name('user.security');
-Route::post('user/generate2faSecret', 'Auth\PasswordSecurityController@generate2faSecret')->name('user.generate2faSecret');
+Route::get('user/2fa', 'PasswordSecurityController@show2faForm')->name('user.security');
+Route::post('user/generate2faSecret', 'PasswordSecurityController@generate2faSecret')->name('user.generate2faSecret');
 
-Route::post('user/enable/2fa', 'Auth\PasswordSecurityController@enable2fa')->name('user.enable2fa');
-Route::post('user/disable/2fa', 'Auth\PasswordSecurityController@disable2fa')->name('user.disable2fa');
+Route::post('user/enable/2fa', 'PasswordSecurityController@enable2fa')->name('user.enable2fa');
+Route::post('user/disable/2fa', 'PasswordSecurityController@disable2fa')->name('user.disable2fa');
 Route::post('user/2faVerify', static function () {
     return redirect(URL()->previous());
 })->name('user.2faVerify')->middleware('2fa');

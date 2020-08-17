@@ -2,6 +2,7 @@
 
 namespace Swarovsky\Core\Providers;
 
+use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Routing\Router;
 use Spatie\Permission\Middlewares\PermissionMiddleware;
@@ -10,6 +11,7 @@ use Spatie\Permission\Middlewares\RoleOrPermissionMiddleware;
 use Swarovsky\Core\Http\Middleware\AdvancedPermissionMiddleware;
 use Swarovsky\Core\Http\Middleware\Google2FAMiddleware;
 use Swarovsky\Core\Services\FormService;
+use Swarovsky\Core\Facades\FormFacade;
 
 class CoreServiceProvider extends ServiceProvider
 {
@@ -101,6 +103,9 @@ class CoreServiceProvider extends ServiceProvider
         $this->app->singleton('lb-uikit-3-forms', static function() {
             return new FormService();
         });
+
+        $loader = AliasLoader::getInstance();
+        $loader->alias('Form', FormFacade::class);
     }
 
     private function registerSkeleton(): void
