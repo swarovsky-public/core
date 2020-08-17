@@ -1,8 +1,11 @@
 {
     "name": "swarovsky/core",
-    "description": "RBAC, crud, base FrameWork",
+    "description": "RBAC framework, with crud manager",
+    "keywords": ["laravel", "crud", "rbac"],
+    "homepage": "https://github.com/swarovsky-public/core",
     "type": "library",
     "license": "MIT",
+    "version": "1.0.0-alpha",
     "authors": [
         {
             "name": "swaro",
