@@ -2,10 +2,10 @@
 
 namespace Swarovsky\Core\Models;
 
-use App\Helpers\StrHelper;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use Swarovsky\Core\Helpers\StrHelper;
 
 class AdvancedModel extends Model
 {
