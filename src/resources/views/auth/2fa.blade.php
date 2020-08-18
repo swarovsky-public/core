@@ -1,4 +1,4 @@
-@extends('swarovsky-core::layouts.admin')
+@extends('swarovsky-core::layouts.app')
 
 @section('content')
 <div class="uk-section-small">

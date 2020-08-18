@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('swarovsky-core::layouts.app')
 
 @section('content')
 <div class="container">
