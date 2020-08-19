@@ -1,2 +1,2 @@
-php artisan vendor:publish Swarovsky\Core\Providers\CoreServiceProvider
+php artisan vendor:publish
 to publish css/js 
