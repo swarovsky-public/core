@@ -19,6 +19,8 @@
                             {!! Form::submit('Login')->icon('check', true)->color('primary')->attrs(['class' => 'uk-margin-top uk-width-1-1']) !!}
                             {!! Form::close() !!}
 
+                            <a href="{{url('password/reset')}}" class="uk-text-muted uk-text-small">Forgot password?</a>
+
                             <hr class="uk-divider-icon">
 
                             @include('swarovsky-core::auth.social')
@@ -31,6 +33,3 @@
         </div>
     </div>
 @endsection
-@push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.5/dist/js/uikit-icons.min.js"></script>
-@endpush

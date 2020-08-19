@@ -1,29 +1,23 @@
 @extends(config('swarovsky-core.layout.app'))
 
 @section('content')
-
-<div class="uk-flex uk-flex-center uk-flex-middle uk-height-1-1">
-    <div class="uk-vertical-align-middle uk-padding-small">
-
-        <div class="uk-card uk-card-default" style="width: 400px;">
-            <div class="uk-card-header">
-                <h3 class="uk-card-title">{{ __('Confirm Password') }}</h3>
-            </div>
-            <div class="uk-card-body">
-                {{ __('Please confirm your password before continuing.') }}
-
-                {!!Form::open()->route('password.confirm')!!}
-                {!! Form::text('password', 'Confirm your password')->attrs(['required' => true])->type('password')->icon('lock') !!}
-                {!! Form::submit('Login')->icon('check', true)->color('primary')->attrs(['class' => 'uk-margin-top uk-width-1-1']) !!}
-                {!! Form::close() !!}
-            </div>
-            <div class="uk-card-footer">
-                <a class="btn btn-link" href="{{ route('password.request') }}">
-                    {{ __('Forgot Your Password?') }}
-                </a>
+    <div class="uk-section uk-flex uk-animation-fade" uk-height-viewport>
+        <div class="uk-width-1-1">
+            <div class="uk-container">
+                <div class="uk-grid-margin uk-grid uk-grid-stack" uk-grid>
+                    <div class="uk-width-1-1@m">
+                        <div style="border-radius: 1px"
+                             class="uk-margin uk-width-large uk-margin-auto uk-card uk-card-default uk-card-body uk-box-shadow-large">
+                            <h3 class="uk-card-title uk-text-center">{{ __('Confirm Password') }}</h3>
+                            <hr class="uk-divider-icon">
+                            {!! Form::open()->route('password.confirm') !!}
+                            {!! Form::text('password', 'Confirm your password')->attrs(['required' => true])->type('password')->icon('lock') !!}
+                            {!! Form::submit('Confirm')->icon('check', true)->color('primary')->attrs(['class' => 'uk-margin-top uk-width-1-1']) !!}
+                            {!! Form::close() !!}
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-
     </div>
-</div>
 @endsection
