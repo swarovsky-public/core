@@ -4,8 +4,8 @@
     "keywords": ["laravel", "crud", "rbac"],
     "homepage": "https://github.com/swarovsky-public/core",
     "type": "library",
-    "license": "MIT",
     "version": "1.0.0",
+    "license": "MIT",
     "authors": [
         {
             "name": "swaro",
@@ -18,7 +18,7 @@
             "Swarovsky\\Core\\": "src/"
         }
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "require": {
         "php": "^7.4",
         "ext-json": "*",
@@ -30,7 +30,6 @@
         "pragmarx/google2fa": "^8.0",
         "pragmarx/google2fa-laravel": "^1.3",
         "pragmarx/google2fa-qrcode": "^1.0",
-        "spatie/laravel-permission": "^3.13",
-        "swarovsky/core": "dev-master"
+        "spatie/laravel-permission": "^3.13"
     }
 }
