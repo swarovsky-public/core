@@ -53,7 +53,7 @@ return [
     /*
      * One Time Password View.
      */
-    'view' => 'auth.google2fa',
+    'view' => 'swarovsky-core::auth.google2fa',
 
     /*
      * One Time Password error message.

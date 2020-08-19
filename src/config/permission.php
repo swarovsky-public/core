@@ -2,6 +2,10 @@
 
 return [
 
+    'views' => [
+      'password-confirm' => 'swarovsky-core::auth.passwords.confirm'
+    ],
+
     'models' => [
 
         /*

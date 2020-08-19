@@ -1,17 +1,36 @@
-@push('styles')
-    <link rel="stylesheet" href="{{url('css/notify.min.css')}}"/>
-@endpush
-
-<script src="{{ asset('js/notify.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
 @if ($errors->any())
-    @foreach (['warning'=>'alert-triangle','danger'=>'alert-circle','info'=>'help-circle','success'=>'check'] as $errorType=>$errorIcon)
-        @foreach ($errors->get($errorType) as $key=>$error)
-            <script>
-                let notyf = new Notyf();
-                setTimeout(function() {
-                    notyf.confirm("{{$error}}");
-                }, 500);
-            </script>
+    <script>
+        let notyf = new Notyf({
+            duration: 4000,
+            dismissible: true,
+            types: [
+                {
+                    type: 'warning',
+                    background: 'orange',
+                    icon: {
+                        className: 'material-icons',
+                        tagName: 'i',
+                        text: 'warning'
+                    }
+                },
+            ]
+        });
+        @foreach ($errors->get('success') as $error)
+            setTimeout(function () {
+                notyf.success("{{$error}}");
+            }, 500);
         @endforeach
-    @endforeach
+        @foreach ($errors->get('warning') as $error)
+            setTimeout(function () {
+                notyf.warning("{{$error}}");
+            }, 500);
+        @endforeach
+        @foreach ($errors->get('danger') as $error)
+            setTimeout(function () {
+                notyf.error("{{$error}}");
+            }, 500);
+        @endforeach
+    </script>
 @endif

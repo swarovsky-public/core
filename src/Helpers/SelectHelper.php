@@ -1,10 +1,11 @@
 <?php
 
 namespace Swarovsky\Core\Helpers;
-use App\Models\Permission;
-use App\Models\Role;
-use App\Models\User;
 
+
+use Swarovsky\Core\Models\Permission;
+use Swarovsky\Core\Models\Role;
+use Swarovsky\Core\Models\User;
 
 class SelectHelper
 {

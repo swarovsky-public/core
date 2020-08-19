@@ -1,5 +1,7 @@
 <?php
+
 namespace Swarovsky\Core\Builders;
+
 use Illuminate\Support\Str;
 
 class FormBuilder
@@ -36,6 +38,7 @@ class FormBuilder
     private string $_type;
     private string $_url;
     private $_value;
+    private $_render;
 
 
     public function __construct()
@@ -177,7 +180,10 @@ class FormBuilder
             }
 
             foreach ($this->_options as $key => $label) {
-                if (array_key_exists($key, $value)) {
+                if($label === 'None'){
+                    $key = null;
+                }
+                if (in_array($key, $value, true)) {
                     $match = true;
                 } else {
                     $match = false;
@@ -185,13 +191,16 @@ class FormBuilder
 
                 $checked = ($match) ? ' selected' : '';
 
-                $options .= '<option value="' . $key . '"' . $checked . '>' . $label . '</option>';
+                $options .= '<option value="' . $key . '" ' . $checked . '>' . $label . '</option>';
             }
         } else {
             foreach ($this->_options as $optvalue => $label) {
+                if($label === 'None'){
+                    $optvalue = null;
+                }
                 $checked = $optvalue === $value ? ' selected' : '';
 
-                $options .= '<option value="' . $optvalue . '"' . $checked . '>' . $label . '</option>';
+                $options .= '<option value="' . $optvalue . '" ' . $checked . '>' . $label . '</option>';
             }
         }
 
@@ -229,11 +238,11 @@ class FormBuilder
     private function _renderButtonOrAnchor(): string
     {
         $disabled = $this->_disabled ? ' disabled' : '';
-        $full 	  = $this->_full ? ' uk-width-1-1' : '';
-        $icon 	  = $this->_getIcon('button');
-        $outline  = $this->_outline ? ' uk-button-outline' : '';
-        $size 	  = $this->_size ? ' uk-button-' . $this->_size : '';
-        $value 	  = $this->_e($this->_value);
+        $full = $this->_full ? ' uk-width-1-1' : '';
+        $icon = $this->_getIcon('button');
+        $outline = $this->_outline ? ' uk-button-outline' : '';
+        $size = $this->_size ? ' uk-button-' . $this->_size : '';
+        $value = $this->_e($this->_value);
 
         if ($this->_icon && array_key_exists('flip', $this->_icon)) {
             if ($this->_icon['flip']) {
@@ -252,8 +261,8 @@ class FormBuilder
 
             $attrs = $this->_buildAttrs([
                 'class' => $class . $disabled,
-                'href' 	=> $href,
-                'role' 	=> 'button',
+                'href' => $href,
+                'role' => 'button',
                 'aria-disabled' => $disabled ? 'true' : null
             ]);
 
@@ -271,15 +280,15 @@ class FormBuilder
 
     private function _renderCheckboxOrRadio(): string
     {
-        $attrs  = $this->_buildAttrs([
-            "type" 	=> $this->_type,
+        $attrs = $this->_buildAttrs([
+            "type" => $this->_type,
             "value" => $this->_meta['value']
         ]);
 
-        $error 	= $this->_getValidationFieldMessage();
-        $for 	= $this->_id ?: $this->_name;
+        $error = $this->_getValidationFieldMessage();
+        $for = $this->_id ?: $this->_name;
         $inline = $this->_inline ? ' uk-inline' : '';
-        $label  = $this->_e($this->_label);
+        $label = $this->_e($this->_label);
 
         $this->_resetFlags();
 
@@ -289,8 +298,8 @@ class FormBuilder
     private function _renderWrapperCommonField(string $field): string
     {
         $error = $this->_getValidationFieldMessage();
-        $help  = $this->_getHelpText();
-        $icon  = $this->_getIcon();
+        $help = $this->_getHelpText();
+        $icon = $this->_getIcon();
         $label = $this->_getLabel();
 
         $formIcon = '';
@@ -446,7 +455,7 @@ class FormBuilder
     }
 
 
-    private function _getValidationFieldMessage(string $prefix = '<span class="uk-label uk-label-danger"><small>', string $sufix = '</small></span>'): ?string
+    private function _getValidationFieldMessage(string $prefix = '<span class="uk-label uk-label-danger"><small>', string $suffix = '</small></span>'): ?string
     {
         $errors = session('errors');
 
@@ -460,7 +469,7 @@ class FormBuilder
             return null;
         }
 
-        return $prefix . $error . $sufix;
+        return $prefix . $error . $suffix;
     }
 
 
@@ -488,8 +497,8 @@ class FormBuilder
         $props['autocomplete'] = $props['name'];
 
         $props['class'] = $props['class'] ?? '';
-        $props['id'] 	= $this->_getId();
-        $props['type'] 	= $this->_type;
+        $props['id'] = $this->_getId();
+        $props['type'] = $this->_type;
 
         if ($this->_help) {
             $props['aria-describedby'] = $this->_getIdHelp();
@@ -527,7 +536,7 @@ class FormBuilder
         }
 
         if (isset($this->_attrs['required'])) {
-            $props['required']="required";
+            $props['required'] = "required";
         }
 
         $props['class'] = trim($props['class']);
@@ -584,13 +593,13 @@ class FormBuilder
 
     private function _hasOldInput(): bool
     {
-        return count((array) old()) !== 0;
+        return count((array)old()) !== 0;
     }
 
 
     private function _resetFormFlags(): void
     {
-        $this->_Fdata 	= [];
+        $this->_Fdata = [];
         $this->_Flocale = '';
         $this->_Fmethod = 'post';
         $this->_Fmultipart = false;
@@ -599,26 +608,26 @@ class FormBuilder
 
     private function _resetFlags(): void
     {
-        $this->_attrs 	 = [];
-        $this->_color 	 = 'default';
+        $this->_attrs = [];
+        $this->_color = 'default';
         $this->_disabled = false;
-        $this->_full 	 = false;
-        $this->_help 	 = '';
-        $this->_id 		 = '';
-        $this->_icon 	 = [];
-        $this->_inline 	 = false;
-        $this->_label 	 = '';
-        $this->_meta 	 = [];
+        $this->_full = false;
+        $this->_help = '';
+        $this->_id = '';
+        $this->_icon = [];
+        $this->_inline = false;
+        $this->_label = '';
+        $this->_meta = [];
         $this->_multiple = false;
-        $this->_name 	 = '';
-        $this->_options  = [];
-        $this->_outline  = false;
+        $this->_name = '';
+        $this->_options = [];
+        $this->_outline = false;
         $this->_placeholder = '';
         $this->_readonly = false;
-        $this->_render 	 = null;
-        $this->_size 	 = '';
-        $this->_type 	 = '';
-        $this->_url 	 = '';
-        $this->_value 	 = '';
+        $this->_render = null;
+        $this->_size = '';
+        $this->_type = '';
+        $this->_url = '';
+        $this->_value = '';
     }
 }

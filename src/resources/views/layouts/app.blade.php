@@ -10,7 +10,6 @@
     <title>Admin Panel</title>
     <!-- Styles -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.5.3/dist/css/uikit.min.css"/>
-    <link rel="stylesheet" href="{{url('css/notify.min.css')}}"/>
     @stack('styles')
 </head>
 

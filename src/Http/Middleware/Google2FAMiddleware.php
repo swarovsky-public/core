@@ -2,9 +2,10 @@
 
 namespace Swarovsky\Core\Http\Middleware;
 
-use App\Support\Google2FAAuthenticator;
+
 use Closure;
 use Illuminate\Http\Request;
+use Swarovsky\Core\Support\Google2FAAuthenticator;
 
 class Google2FAMiddleware
 {

@@ -14,7 +14,7 @@
                         <div uk-dropdown="pos: bottom-right; mode: click; offset: -17;">
                            <ul class="uk-nav uk-navbar-dropdown-nav">
                                <li class="uk-nav-header">Options</li>
-                               <li><a href="#">Edit Profile</a></li>
+                               <li><a href="{{ route('user.profile') }}">Edit Profile</a></li>
                                <li><a href="{{ route('user.security') }}">{{ __('Security') }}</a></li>
                                <li class="uk-nav-header">Actions</li>
                                <li>

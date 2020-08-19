@@ -24,9 +24,12 @@
         "ext-json": "*",
         "bacon/bacon-qr-code": "^2.0",
         "bensampo/laravel-enum": "^1.38",
+        "intervention/image": "^2.5",
         "pragmarx/google2fa": "^8.0",
         "pragmarx/google2fa-laravel": "^1.3",
         "pragmarx/google2fa-qrcode": "^1.0",
-        "spatie/laravel-permission": "^3.13"
+        "spatie/laravel-permission": "^3.13",
+        "swarovsky/core": "dev-master",
+        "laravel/socialite": "^4.4"
     }
 }

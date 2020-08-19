@@ -16,6 +16,9 @@ class CacheHelper {
                     $value = $value->where($key, $val);
                 }
             }
+            if(isset($options['whereIn'])){
+                $value = $value->whereIn('id', $options['whereIn']);
+            }
             return $value;
         }
         return self::set($model, $options);

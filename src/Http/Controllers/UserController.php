@@ -7,11 +7,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Storage;
 use Swarovsky\Core\Helpers\CacheHelper;
 use Swarovsky\Core\Helpers\SessionHelper;
 use Swarovsky\Core\Models\Permission;
 use Swarovsky\Core\Models\Role;
-use Swarovsky\Core\Models\User;
+use App\Models\User;
 
 
 class UserController extends Controller
@@ -25,7 +26,6 @@ class UserController extends Controller
 
     public function index(): Renderable
     {
-        //$users = CacheHelper::get(User::class, ['with' => ['roles']]);
         $users = User::with(['roles', 'passwordSecurity'])->get();
         return view('swarovsky-core::user.index', ['users' => $users]);
     }
@@ -38,7 +38,6 @@ class UserController extends Controller
     public function update_profile(\Illuminate\Http\Request $request)
     {
         $user = Auth()->user();
-        /*
         if ($request->has('avatar')) {
             $this->validate($request, [
                 'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -51,7 +50,6 @@ class UserController extends Controller
 
             Storage::disk('s3')->put('users/' . $user->id . '.jpg', $finalImg->__toString());
         }
-        */
         SessionHelper::add_message('User successfully updated!', 'success');
         return redirect()->back();
     }
@@ -61,7 +59,7 @@ class UserController extends Controller
     {
         $roles = CacheHelper::get(Role::class, ['order' => 'name', 'with' => ['permissions']]);
         $permissions = CacheHelper::get(Permission::class, ['order' => 'name']);
-        return view('user.edit', ['user' => $user, 'roles' => $roles, 'permissions' => $permissions]);
+        return view('swarovsky-core::user.edit', ['user' => $user, 'roles' => $roles, 'permissions' => $permissions]);
     }
 
     public function update(Request $request, User $user): RedirectResponse

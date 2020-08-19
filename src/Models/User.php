@@ -3,6 +3,8 @@
 namespace Swarovsky\Core\Models;
 
 
+
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -20,7 +22,7 @@ use Swarovsky\Core\Helpers\StrHelper;
  * @property $created_at
  * @property $updated_at
  */
-class User extends Authenticatable
+class User extends Authenticatable  implements MustVerifyEmail
 {
     use Notifiable, HasRoles;
 
@@ -62,6 +64,19 @@ class User extends Authenticatable
         }
 
         return false;
+    }
+
+
+
+
+    public static function isGoogle(int $id): bool
+    {
+        return SocialGoogleAccount::where('user_id', '=', $id)->first() !== null;
+    }
+
+    public static function isFacebook(int $id): bool
+    {
+        return SocialFacebookAccount::where('user_id', '=', $id)->first() !== null;
     }
 
 }

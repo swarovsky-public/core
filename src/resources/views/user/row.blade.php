@@ -9,19 +9,17 @@
         {{$user->email}}
     </td>
     <td class="align-middle">
-        {{$user->email_verified_at ? 'Y' : 'N'}}
+        <span uk-icon="{{$user->email_verified_at ? 'check' : 'close'}}"
+              class="uk-text-{{$user->email_verified_at ? 'success' : 'danger'}}"></span>
     </td>
     <td class="align-middle">
-        {{$user->passwordSecurity === null ? 'N' : 'Y'}}
+        <span uk-icon="{{$user->passwordSecurity === null ? 'close' : 'check'}}"
+              class="uk-text-{{$user->passwordSecurity === null ? 'danger' : 'success'}}"></span>
     </td>
     <td class="align-middle">
-        @if($user->roles)
-            @foreach($user->roles as $role)
-                <div><code>{{$role->name}}</code></div>
-            @endforeach
-        @else
-            Has no role
-        @endif
+        @foreach($user->roles as $role)
+            <div><code>{{$role->name}}</code></div>
+        @endforeach
     </td>
     <td class="align-middle">
         @if($user->permissions)
@@ -39,28 +37,25 @@
         {{$user->created_at->diffForHumans()}}
     </td>
     <td class="align-middle">
-        <div class="uk-button-group">
-            @if(auth()->user()->isAllowed('Edit users'))
-                <a href="{{route('users.edit', ['user' => $user])}}"
-                   class="uk-button uk-button-small uk-button-default"
-                   title="Edit user">
-                    Edit
-                </a>
-                <button type="button" class="uk-button uk-button-danger uk-button-small" title="Ban"
-                    onclick="return confirm('Are you sure?')">
-                    Ban
-                </button>
 
-                <form method="POST" action="{{route('users.destroy', $user)}}" style="display: inline-block;">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="uk-button uk-button-danger uk-button-small" title="Delete"
-                            onclick="return confirm('Are you sure?')">
-                        Delete
-                    </button>
-                </form>
-            @endif
-        </div>
+        @if(auth()->user()->isAllowed('Edit users'))
+            <a href="{{route('users.edit', ['user' => $user])}}"
+               class="uk-icon-button uk-button-primary" uk-icon="pencil"
+               title="Edit user"></a>
+            <button type="button"
+                    class="uk-icon-button uk-button-default" uk-icon="lock"
+                    onclick="return confirm('Are you sure?')"></button>
+
+            <form method="POST" action="{{route('users.destroy', $user)}}" style="display: inline-block;">
+                @csrf
+                @method('DELETE')
+                <button type="submit"
+                        title="Delete" class="uk-icon-button uk-button-danger" uk-icon="trash"
+                        onclick="return confirm('Are you sure?')">
+                </button>
+            </form>
+        @endif
+
     </td>
 
 </tr>
