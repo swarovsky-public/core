@@ -5,7 +5,7 @@
         <div class="uk-width-1-1">
             <div class="uk-container">
                 <div class="uk-grid-margin uk-grid uk-grid-stack" uk-grid>
-                    <div class="uk-width-1-1@m">
+                    <div class="uk-width-1-1@m" id="register-view">
                         <div style="border-radius: 1px"
                              class="uk-margin uk-width-large uk-margin-auto uk-card uk-card-default uk-card-body uk-box-shadow-large">
                             <h3 class="uk-card-title uk-text-center">{{ __('Register') }}</h3>
@@ -31,7 +31,8 @@
                                 {!! Form::submit('Register')->icon('check', true)->color('primary')->attrs(['class' => 'uk-margin-top uk-width-1-1']) !!}
                             @endif
                             {!! Form::close() !!}
-
+                            <a href="{{url('login')}}" title="Sign in"
+                               class="uk-text-muted uk-text-small">Already have an account?</a>
                             <hr class="uk-divider-icon">
 
                             @include('swarovsky-core::auth.social')

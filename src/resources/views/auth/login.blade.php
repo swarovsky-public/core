@@ -5,7 +5,7 @@
         <div class="uk-width-1-1">
             <div class="uk-container">
                 <div class="uk-grid-margin uk-grid uk-grid-stack" uk-grid>
-                    <div class="uk-width-1-1@m">
+                    <div class="uk-width-1-1@m" id="login-view">
                         <div style="border-radius: 1px"
                              class="uk-margin uk-width-large uk-margin-auto uk-card uk-card-default uk-card-body uk-box-shadow-large">
                             <h3 class="uk-card-title uk-text-center">{{ __('Login') }}</h3>
@@ -19,7 +19,11 @@
                             {!! Form::submit('Login')->icon('check', true)->color('primary')->attrs(['class' => 'uk-margin-top uk-width-1-1']) !!}
                             {!! Form::close() !!}
 
-                            <a href="{{url('password/reset')}}" class="uk-text-muted uk-text-small">Forgot password?</a>
+                            <a href="{{url('password/reset')}}" title="Ask for a new one"
+                               class="uk-text-muted uk-text-small">Forgot password?</a>
+                            <br>
+                            <a href="{{url('register')}}" title="Register a new one"
+                               class="uk-text-muted uk-text-small">Don't have an account?</a>
 
                             <hr class="uk-divider-icon">
 

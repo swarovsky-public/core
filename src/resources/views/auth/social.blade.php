@@ -1,5 +1,6 @@
-<div class="uk-margin uk-grid-match uk-child-width-1-2@s" uk-grid>
+<div class="uk-margin uk-grid-match uk-child-width-1-2@s" uk-grid id="social-view">
 
+    @if(filled(env('FACEBOOK_APP_ID')))
     <div>
         <a href="{{url('/redirect/google')}}"
            title="Login with Google"
@@ -8,6 +9,8 @@
             Google
         </a>
     </div>
+    @endif
+        @if(filled(env('GOOGLE_CLIENT_ID')))
     <div>
         <a href="{{url('/redirect/facebook')}}"
            title="Login with Facebook"
@@ -16,9 +19,10 @@
             Facebook
         </a>
     </div>
+            @endif
 
 </div>
-
+@if(filled(env('COMING_SOON')))
 <div class="uk-margin uk-grid-match uk-child-width-1-2@s uk-grid" uk-grid="">
 
     <div class="uk-first-column">
@@ -37,3 +41,4 @@
     </div>
 
 </div>
+@endif

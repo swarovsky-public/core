@@ -6,7 +6,7 @@
                  class="uk-align-center uk-border-circle" width="100"  id="avatar"
                  alt="{{Auth()->user()->name . ' avatar'}}">
         @else
-            <img id="avatar" width="100" class="uk-border-circle" alt="{{Auth()->user()->name}} avatar"
+            <img id="avatar" width="100" class="uk-align-center uk-border-circle" alt="{{Auth()->user()->name}} avatar"
                  src="https://media.istockphoto.com/vectors/teacher-male-avatar-character-vector-id878841282?s=170x170"/>
         @endif
         <div class="uk-margin-top"></div>
