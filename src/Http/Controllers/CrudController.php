@@ -15,6 +15,7 @@ use Swarovsky\Core\Helpers\SessionHelper;
 use Swarovsky\Core\Helpers\StrHelper;
 use Swarovsky\Core\Models\AdvancedModel;
 
+
 /**
  * Class CrudController
  * @package Swarovsky\Core\Http\Controllers
@@ -294,9 +295,19 @@ class CrudController extends Controller
         if (class_exists($swarovsky_class)) {
             return $swarovsky_class;
         }
-        $qoh_class = str_replace('$', '', 'Swarovsky\Queendomofhera\Models\$') . ucFirst(Str::camel($model));
-        if (class_exists($qoh_class)) {
-            return $qoh_class;
+
+        if (app()->getProvider('Swarovsky\Subscriptions\Providers\SubscriptionsServiceProvider')) {
+            $qoh_class = str_replace('$', '', 'Swarovsky\Subscriptions\Models\$') . ucFirst(Str::camel($model));
+            if (class_exists($qoh_class)) {
+                return $qoh_class;
+            }
+        }
+
+        if (app()->getProvider('Swarovsky\Queendomofhera\Providers\QueendomofheraServiceProvider')) {
+            $qoh_class = str_replace('$', '', 'Swarovsky\Queendomofhera\Models\$') . ucFirst(Str::camel($model));
+            if (class_exists($qoh_class)) {
+                return $qoh_class;
+            }
         }
         return $app_class;
     }

@@ -24,7 +24,7 @@ class AdvancedModel extends Model
     {
         $fieldAndTypeList = [];
         $databaseName = $this->getConnection()->getDatabaseName();
-        $foreign_keys = DB::select('SELECT
+        $foreign_keys = DB::connection($this->connection)->select('SELECT
             COLUMN_NAME,
             REFERENCED_TABLE_NAME,
             REFERENCED_COLUMN_NAME
@@ -34,20 +34,20 @@ class AdvancedModel extends Model
         ', ['database' => $databaseName, 'table' => $this->getTable()]);
         $this->foreign_keys = $foreign_keys;
         //dd($foreign_keys, DB::select("describe " . $this->getTable()));
-        foreach (DB::select("describe " . $this->getTable()) as $field) {
-            $type = explode(' ', $field->Type)[0];
+        foreach (DB::connection($this->connection)->select("describe " . $this->getTable()) as $field) {
+            $type = explode(' ', $field->type)[0];
             $max_len = -1;
             if (strpos($type, '(') !== false) {
                 [$type, $max_len] = str_replace(')', '', explode('(', $type));
             }
-            $required = $field->Null === 'NO';
-            $unique = $field->Key === 'UNI';
-            $ai = $field->Extra === 'auto_increment';
+            $required = $field->null === 'NO';
+            $unique = $field->key === 'UNI';
+            $ai = $field->extra === 'auto_increment';
 
             $foreign_key = null;
-            if ($field->Key === 'MUL') {
+            if ($field->key === 'MUL') {
                 foreach ($foreign_keys as $fk) {
-                    if ($fk->COLUMN_NAME === $field->Field) {
+                    if ($fk->COLUMN_NAME === $field->field) {
                         $foreign_key = [
                             'table' => $fk->REFERENCED_TABLE_NAME,
                             'column' => $fk->REFERENCED_COLUMN_NAME
@@ -57,7 +57,7 @@ class AdvancedModel extends Model
                 }
             }
 
-            $fieldAndTypeList[$field->Field] = [
+            $fieldAndTypeList[$field->field] = [
                 'required' => $required,
                 'type' => $type,
                 'max-length' => $max_len,

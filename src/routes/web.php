@@ -9,7 +9,7 @@ Route::group(['namespace' => '\Swarovsky\Core\Http\Controllers'], static functio
     Route::get('callback/facebook', 'Auth\LoginController@handleProviderCallbackFacebook');
 
 
-    Route::group(['middleware' => [ 'auth', 'verified']], static function () {
+    Route::group(['middleware' => ['auth', 'verified']], static function () {
 
         Route::get('user/2fa', 'Auth\PasswordSecurityController@show2faForm')->name('user.security');
         Route::post('user/generate2faSecret', 'Auth\PasswordSecurityController@generate2faSecret')->name('user.generate2faSecret');
@@ -19,15 +19,25 @@ Route::group(['namespace' => '\Swarovsky\Core\Http\Controllers'], static functio
         Route::post('user/2faVerify', static function () {
             return redirect(URL()->previous());
         })->name('user.2faVerify')->middleware('2fa');
-        Route::get('profile', 'UserController@profile')->name('user.profile');
-        Route::put('profile/update', 'UserController@update_profile')->name('user.update_profile');
 
-        Route::group(['middleware' => ['password.confirm', '2fa', 'throttle:120,1']], static function () {
-            Route::resource('users', 'UserController');
-            Route::resource('roles', 'CrudController');
-            Route::resource('permissions', 'CrudController');
+
+        Route::group(['middleware' => ['2fa']], static function () {
+
+            Route::get('profile', 'UserController@profile')->name('user.profile');
+            Route::put('profile/update', 'UserController@update_profile')->name('user.update_profile');
+
+
+            Route::group(['prefix' => 'admin', 'middleware' => ['password.confirm']], static function () {
+                Route::get('/', 'AdminController@dashboard')->name('admin.dashboard');
+
+                Route::resource('users', 'UserController');
+                Route::resource('roles', 'CrudController');
+                Route::resource('permissions', 'CrudController');
+            });
+
         });
 
-     });
+
+    });
 
 });
