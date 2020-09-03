@@ -10,7 +10,7 @@
                              class="uk-margin uk-width-large uk-margin-auto uk-card uk-card-default uk-card-body uk-box-shadow-large">
                             <h3 class="uk-card-title uk-text-center">{{ __('Register') }}</h3>
 
-                            {!! Form::open()->route('register') !!}
+                            {!! Form::open()->route('register')->id('register_form') !!}
                             {!! Form::text('name', 'Username')->attrs(['required' => true])->icon('user') !!}
                             {!! Form::text('email', 'Email')->attrs(['required' => true])->type('email')->icon('mail') !!}
 
@@ -50,7 +50,7 @@
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.5/dist/js/uikit-icons.min.js"></script>
     <script>
         function onSubmit(token) {
-            const form = document.getElementById('register-form');
+            const form = document.getElementById('register_form');
 
             const XHR = new XMLHttpRequest();
             let urlEncodedData = "",
