@@ -21,7 +21,7 @@
                                 <button
                                     type="button"
                                     data-sitekey="{{env('GOOGLE_RECAPTCHA_KEY')}}"
-                                    data-callback='onSubmit'
+                                    data-callback='registerOnSubmit'
                                     data-action='submit'
                                     class="uk-button uk-button-default uk-button-large uk-width-1-1 g-recaptcha"
                                 >
@@ -48,44 +48,25 @@
 @push('scripts')
     <script src="https://www.google.com/recaptcha/api.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.5/dist/js/uikit-icons.min.js"></script>
-    <script>
-        function onSubmit(token) {
-            const form = document.getElementById('register_form');
-
-            const XHR = new XMLHttpRequest();
-            let urlEncodedData = "",
-                urlEncodedDataPairs = [];
-
-
-            let name = document.getElementById('name').value;
-            urlEncodedDataPairs.push(encodeURIComponent('name') + '=' + encodeURIComponent(name));
-
-            let email = document.getElementById('email').value;
-            urlEncodedDataPairs.push(encodeURIComponent('email') + '=' + encodeURIComponent(email));
-
-            let password = document.getElementById('password').value;
-            urlEncodedDataPairs.push(encodeURIComponent('password') + '=' + encodeURIComponent(password));
-
-            let passwordConfirm = document.getElementById('password-confirm').value;
-            urlEncodedDataPairs.push(encodeURIComponent('password_confirmation') + '=' + encodeURIComponent(passwordConfirm));
-
-            urlEncodedDataPairs.push(encodeURIComponent('g-recaptcha-response') + '=' + encodeURIComponent(token));
-            urlEncodedDataPairs.push(encodeURIComponent('_token') + '=' + encodeURIComponent('{{ csrf_token()}}'));
-
-            urlEncodedData = urlEncodedDataPairs.join('&').replace(/%20/g, '+');
-
-            XHR.addEventListener('load', function (event) {
-                if (event.target.status === 201) {
-                    window.location.replace("{{route('home')}}");
-                }
-            });
-            XHR.addEventListener('error', function (event) {
-
-            });
-            XHR.open(form.getAttribute("method"), form.getAttribute("action"));
-            XHR.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            XHR.setRequestHeader('Accept', 'application/json');
-            XHR.send(urlEncodedData);
+    <script type="text/javascript">
+        function registerOnSubmit(token) {
+            axios.post('{{route('register')}}', {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                password: document.getElementById('password').value,
+                password_confirmation: document.getElementById('password_confirmation').value,
+                'g-recaptcha-response': token,
+                _token: '{{ csrf_token()}}',
+            })
+                .then(function (response) {
+                    console.log('success', response);
+                    if (response.status === 201) {
+                        window.location.replace("{{route('home')}}");
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
         }
     </script>
 @endpush
