@@ -14,7 +14,7 @@ trait ConfirmsPasswords
 
     public function showConfirmForm(): View
     {
-        return view('swarovsky-core::permission.views.auth.password-confirm');
+        return view('swarovsky-core::auth.passwords.confirm');
     }
 
     /**
