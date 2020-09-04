@@ -16,7 +16,8 @@ class AdvancedModel extends Model
     protected array $has_many_relations = [];
     protected array $belongs_to_many_relations = [];
 
-    public function custom_sync(Request $request): void{
+    public function custom_sync(Request $request): void
+    {
 
     }
 
@@ -35,36 +36,75 @@ class AdvancedModel extends Model
         $this->foreign_keys = $foreign_keys;
         //dd($foreign_keys, DB::select("describe " . $this->getTable()));
         foreach (DB::connection($this->connection)->select("describe " . $this->getTable()) as $field) {
-            $type = explode(' ', $field->type)[0];
+            if (isset($field->type)) {
+                $type = explode(' ', $field->type)[0];
+            } else {
+                $type = explode(' ', $field->Type)[0];
+            }
             $max_len = -1;
             if (strpos($type, '(') !== false) {
                 [$type, $max_len] = str_replace(')', '', explode('(', $type));
             }
-            $required = $field->null === 'NO';
-            $unique = $field->key === 'UNI';
-            $ai = $field->extra === 'auto_increment';
+            if (isset($field->null)) {
+                $required = $field->null === 'NO';
+            } else {
+                $required = $field->Null === 'NO';
+            }
+            if (isset($field->key)) {
+                $unique = $field->key === 'UNI';
+                $mul = $field->key === 'MUL';
+            } else {
+                $unique = $field->Key === 'UNI';
+                $mul = $field->Key === 'MUL';
+            }
+            if (isset($field->extra)) {
+                $ai = $field->extra === 'auto_increment';
+            } else {
+                $ai = $field->Extra === 'auto_increment';
+            }
 
             $foreign_key = null;
-            if ($field->key === 'MUL') {
+            if ($mul) {
                 foreach ($foreign_keys as $fk) {
-                    if ($fk->COLUMN_NAME === $field->field) {
-                        $foreign_key = [
-                            'table' => $fk->REFERENCED_TABLE_NAME,
-                            'column' => $fk->REFERENCED_COLUMN_NAME
-                        ];
-                        break;
+                    if(isset($field->field)) {
+                        if ($fk->COLUMN_NAME === $field->field) {
+                            $foreign_key = [
+                                'table' => $fk->REFERENCED_TABLE_NAME,
+                                'column' => $fk->REFERENCED_COLUMN_NAME
+                            ];
+                            break;
+                        }
+                    } else {
+                        if ($fk->COLUMN_NAME === $field->Field) {
+                            $foreign_key = [
+                                'table' => $fk->REFERENCED_TABLE_NAME,
+                                'column' => $fk->REFERENCED_COLUMN_NAME
+                            ];
+                            break;
+                        }
                     }
                 }
             }
 
-            $fieldAndTypeList[$field->field] = [
-                'required' => $required,
-                'type' => $type,
-                'max-length' => $max_len,
-                'unique' => $unique,
-                'ai' => $ai,
-                'foreign_key' => $foreign_key
-            ];
+            if(isset($field->field)) {
+                $fieldAndTypeList[$field->field] = [
+                    'required' => $required,
+                    'type' => $type,
+                    'max-length' => $max_len,
+                    'unique' => $unique,
+                    'ai' => $ai,
+                    'foreign_key' => $foreign_key
+                ];
+            } else {
+                $fieldAndTypeList[$field->Field] = [
+                    'required' => $required,
+                    'type' => $type,
+                    'max-length' => $max_len,
+                    'unique' => $unique,
+                    'ai' => $ai,
+                    'foreign_key' => $foreign_key
+                ];
+            }
         }
 
         return $fieldAndTypeList;
@@ -111,7 +151,7 @@ class AdvancedModel extends Model
                     break;
                 }
             }
-            if($notFound){
+            if ($notFound) {
                 $orderedColumns[self::firstFreeKey($orderedColumns)] = $column;
             }
         }
@@ -128,11 +168,13 @@ class AdvancedModel extends Model
         return $i;
     }
 
-    public function getHasManyRelations(): array{
+    public function getHasManyRelations(): array
+    {
         return $this->has_many_relations;
     }
 
-    public function getBelongsToManyRelations(): array{
+    public function getBelongsToManyRelations(): array
+    {
         return $this->belongs_to_many_relations;
     }
 }
